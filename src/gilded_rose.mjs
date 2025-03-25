@@ -30,6 +30,9 @@ export class Shop {
       case "Sulfuras, Hand of Ragnaros":
         this.updateSulfras(item);
         break;
+      case "Conjured":
+        this.updateConjuredItem(item);
+        break;
       default:
         this.updateEveryThingElse(item);
     }
@@ -71,6 +74,16 @@ export class Shop {
     if (item.sellIn < 0) {
       this.increaseQuality(item);
     }
+  }
+
+  updateConjuredItem(item){
+    this.decreaseQuality(item, 2);
+    item.sellIn = item.sellIn - 1;
+
+    if (item.sellIn < 0) {
+      this.decreaseQuality(item, 2);
+    }
+
   }
 
   decreaseQuality(item, degradation = 1) {
