@@ -20,20 +20,19 @@ export class Shop {
   }
 
   updateSingleItem(item) {
-    if (item.name === "Aged Brie"){
-      this.updateAgedBrie(item);
-      return;
+    switch (item.name) {
+      case "Aged Brie":
+        this.updateAgedBrie(item);
+        break;
+      case "Backstage passes to a TAFKAL80ETC concert":
+        this.updateBackstagePasses(item);
+        break;
+      case "Sulfuras, Hand of Ragnaros":
+        this.updateSulfras(item);
+        break;
+      default:
+        this.updateEveryThingElse(item);
     }
-    if (item.name === "Backstage passes to a TAFKAL80ETC concert"){
-      this.updateBackstagePasses(item);
-      return;
-    }
-    if (item.name === "Sulfuras, Hand of Ragnaros") {
-      this.updateSulfras(item);
-      return;
-    }
-
-    this.updateEveryThingElse(item);
   }
 
   updateSulfras(item) {
