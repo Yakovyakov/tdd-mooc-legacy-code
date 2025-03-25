@@ -34,15 +34,17 @@ export class Shop {
         this.updateConjuredItem(item);
         break;
       default:
-        this.updateEveryThingElse(item);
+        this.updateNormalItem(item);
     }
   }
+
+  // TODO: Specific methods by item type
 
   updateSulfras(item) {
     item.quality = 80;
   }
   
-  updateEveryThingElse(item) {
+  updateNormalItem(item) {
     this.decreaseQuality(item);
     item.sellIn = item.sellIn - 1;
 
@@ -83,9 +85,10 @@ export class Shop {
     if (item.sellIn < 0) {
       this.decreaseQuality(item, 2);
     }
-
   }
 
+  //TODO: some helpers
+  
   decreaseQuality(item, degradation = 1) {
     item.quality = Math.max(0, item.quality - degradation);
   }
