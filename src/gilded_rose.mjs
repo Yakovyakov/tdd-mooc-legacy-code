@@ -20,6 +20,11 @@ export class Shop {
   }
 
   updateSingleItem(item) {
+    if (true){
+      
+    }else{
+
+    }
     this.updateItemQuality(item);
   }
 
