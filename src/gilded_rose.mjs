@@ -28,8 +28,13 @@ export class Shop {
       this.updateBackstagePasses(item);
       return;
     }
-    
-    this.updateEveryThingElse(item);
+    if (true) {
+      this.updateEveryThingElse(item);
+
+    } else {
+      this.updateEveryThingElse(item);
+
+    }
 
   }
 
