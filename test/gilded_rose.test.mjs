@@ -96,6 +96,41 @@ describe("Gilded Rose", () => {
         input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 15, quality: 20 },
         expected: { sellIn: 14, quality: 21 }
     },
+    {
+      description: "Backstage passes...: quality is increase by 2 if 5 < sellIn <= 10",
+      input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 20 },
+      expected: { sellIn: 9, quality: 22 }
+    },
+    {
+        description: "Backstage passes...: quality is increase by 2 if sellIn <= 5",
+        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 5, quality: 20 },
+        expected: { sellIn: 4, quality: 23 }
+    },
+    {
+        description: "Backstage passes...: quality does not exceed 50 (initial 49, sellIn > 10)",
+        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 12, quality: 49 },
+        expected: { sellIn: 11, quality: 50 }
+    },
+    {
+        description: "Backstage passes...: quality does not exceed 50 (initial 48, sellIn <= 5)",
+        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 3, quality: 48 },
+        expected: { sellIn: 2, quality: 50 }
+    },
+    {
+        description: "Backstage passes...: quality drops to 0 if sellIn < 0",
+        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 0, quality: 30 },
+        expected: { sellIn: -1, quality: 0 }
+    },
+    {
+        description: "Backstage passes...: quality 50 does not change although sellIn <= 5",
+        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 4, quality: 50 },
+        expected: { sellIn: 3, quality: 50 }
+    },
+    {
+        description: "Backstage passes...: quality 0 normally increases",
+        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 8, quality: 0 },
+        expected: { sellIn: 7, quality: 2 }
+    }
   ].forEach(({ description, input, expected }) => {
     test(description, () => {
       const gildedRose = new Shop([new Item(input.name, input.sellIn, input.quality)]);
