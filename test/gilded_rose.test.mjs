@@ -224,6 +224,19 @@ describe("Conjured Items", () => {
     const item = new Item("Conjured", 3, 10);
     const shop = new Shop([item]);
     shop.updateQuality();
+
+    expect(item.name).toBe("Conjured");
+    expect(item.sellIn).toBe(2);
+    expect(item.quality).toBe(8);
+  });
+
+  test("should degrade quality by 2 if sellIn = 1", () => {
+    const item = new Item("Conjured", 1, 10);
+    const shop = new Shop([item]);
+    shop.updateQuality();
+
+    expect(item.name).toBe("Conjured");
+    expect(item.sellIn).toBe(0);
     expect(item.quality).toBe(8);
   });
 
@@ -231,6 +244,9 @@ describe("Conjured Items", () => {
     const item = new Item("Conjured", 0, 10);
     const shop = new Shop([item]);
     shop.updateQuality();
+
+    expect(item.name).toBe("Conjured");
+    expect(item.sellIn).toBe(-1);
     expect(item.quality).toBe(6);
   });
 
@@ -238,6 +254,9 @@ describe("Conjured Items", () => {
     const item = new Item("Conjured", 0, 1);
     const shop = new Shop([item]);
     shop.updateQuality();
+
+    expect(item.name).toBe("Conjured");
+    expect(item.sellIn).toBe(-1);
     expect(item.quality).toBe(0);
   });
 });
