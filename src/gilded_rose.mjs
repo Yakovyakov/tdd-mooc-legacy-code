@@ -35,17 +35,11 @@ export class Shop {
     this.updateEveryThingElse(item);
   }
 
-
-
   updateEveryThingElse(item) {
-    if (item.quality > 0) {
-      item.quality = item.quality - 1;
-    }
+    this.decreaseQuality(item);
     item.sellIn = item.sellIn - 1;
     if (item.sellIn < 0) {
-      if (item.quality > 0) {
-        item.quality = item.quality - 1;
-      }
+      this.decreaseQuality(item);
     }
   }
 
@@ -59,7 +53,7 @@ export class Shop {
     }
     
     item.sellIn = item.sellIn - 1;
-    
+
     if (item.sellIn < 0) {
       item.quality = item.quality - item.quality;
     }
@@ -71,6 +65,12 @@ export class Shop {
 
     if (item.sellIn < 0) {
       this.increaseQuality(item);
+    }
+  }
+
+  decreaseQuality(item) {
+    if (item.quality > 0) {
+      item.quality = item.quality - 1;
     }
   }
 
