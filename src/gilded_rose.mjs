@@ -12,7 +12,7 @@ export class Shop {
   }
 
   updateQuality() {
-    this.items.forEach(item => this.updateSingleItem(item));
+    this.items.forEach((item) => this.updateSingleItem(item));
     return this.items;
   }
 
@@ -40,10 +40,10 @@ export class Shop {
   updateSulfras(item) {
     item.quality = 80;
   }
-  
+
   updateNormalItem(item) {
     this.decreaseQuality(item);
-    item.sellIn = item.sellIn - 1;
+    item.sellIn -= 1;
 
     if (item.sellIn < 0) {
       this.decreaseQuality(item);
@@ -53,13 +53,13 @@ export class Shop {
   updateBackstagePasses(item) {
     this.increaseQuality(item);
     if (item.sellIn < 11) {
-        this.increaseQuality(item);
+      this.increaseQuality(item);
     }
     if (item.sellIn < 6) {
       this.increaseQuality(item);
     }
-    
-    item.sellIn = item.sellIn - 1;
+
+    item.sellIn -= 1;
 
     if (item.sellIn < 0) {
       item.quality = 0;
@@ -68,16 +68,16 @@ export class Shop {
 
   updateAgedBrie(item) {
     this.increaseQuality(item);
-    item.sellIn = item.sellIn - 1;
+    item.sellIn -= 1;
 
     if (item.sellIn < 0) {
       this.increaseQuality(item);
     }
   }
 
-  updateConjuredItem(item){
+  updateConjuredItem(item) {
     this.decreaseQuality(item, 2);
-    item.sellIn = item.sellIn - 1;
+    item.sellIn -= 1;
 
     if (item.sellIn < 0) {
       this.decreaseQuality(item, 2);
@@ -91,8 +91,6 @@ export class Shop {
   }
 
   increaseQuality(item) {
-    if (item.quality < 50) {
-      item.quality = item.quality + 1;
-    }
+    item.quality = Math.min(item.quality + 1, 50);
   }
 }
