@@ -12,10 +12,7 @@ export class Shop {
   }
 
   updateQuality() {
-    for (var i = 0; i < this.items.length; i++) {
-      this.updateSingleItem(this.items[i]);
-    }
-
+    this.items.forEach(item => this.updateSingleItem(item));
     return this.items;
   }
 
@@ -88,7 +85,7 @@ export class Shop {
   }
 
   //TODO: some helpers
-  
+
   decreaseQuality(item, degradation = 1) {
     item.quality = Math.max(0, item.quality - degradation);
   }
