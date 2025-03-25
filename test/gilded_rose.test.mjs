@@ -2,7 +2,24 @@ import { describe, test } from "vitest";
 import { expect } from "chai";
 import { Item, Shop } from "../src/gilded_rose.mjs";
 
+
+describe("Shop", () => {
+  test("should initialize with empty items array if no items are provided", () => {
+
+    const shop = new Shop();
+    expect(shop.items).toEqual([]);
+
+  });
+  test("should initialize with provided items", () => {
+    const items = [new Item("Aged Brie", 2, 0)];
+    const shop = new Shop(items);
+    expect(shop.items).toEqual(items);
+  });
+});
+
 describe("Gilded Rose", () => {
+
+
   test("foo", () => {
     const gildedRose = new Shop([new Item("foo", 0, 0)]);
     const items = gildedRose.updateQuality();
@@ -198,8 +215,29 @@ describe("Gilded Rose", () => {
       expect(items[0].name).toBe("Sulfuras, Hand of Ragnaros");
       expect(items[0].quality).toBe(80);
       expect(items[0].sellIn).toBe(expected.sellIn);
+    });
   });
 });
 
+describe("Conjured Items", () => {
+  test("should degrade quality by 2 if sellIn > 0", () => {
+    const item = new Item("Conjured", 3, 10);
+    const shop = new Shop([item]);
+    shop.updateQuality();
+    expect(item.quality).toBe(8);
+  });
 
+  test("should degrade quality by 4 if sellIn < 0", () => {
+    const item = new Item("Conjured", 0, 10);
+    const shop = new Shop([item]);
+    shop.updateQuality();
+    expect(item.quality).toBe(6);
+  });
+
+  test("should not degrade quality below 0", () => {
+    const item = new Item("Conjured", 0, 1);
+    const shop = new Shop([item]);
+    shop.updateQuality();
+    expect(item.quality).toBe(0);
+  });
 });
