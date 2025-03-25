@@ -26,9 +26,11 @@ export class Shop {
     }
     if (item.name === "Backstage passes to a TAFKAL80ETC concert"){
       this.updateBackstagePasses(item);
-    } else {
-      this.updateEveryThingElse(item);
+      return;
     }
+    
+    this.updateEveryThingElse(item);
+
   }
 
 
