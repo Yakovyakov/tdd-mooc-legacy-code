@@ -21,7 +21,7 @@
   "scripts": {
     "test": "vitest run",
     "autotest": "vitest watch",
-    "coverage": "c8 npm run test",
+    "coverage": "c8 --reporter=html --reporter=lcov npm run test",
     "mutation": "stryker run",
     "format": "prettier --write ."
   }
