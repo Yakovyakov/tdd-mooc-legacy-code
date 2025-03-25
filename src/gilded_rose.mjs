@@ -24,7 +24,7 @@ export class Shop {
       this.updateAgedBrie(item);
       return;
     }
-    if (true){
+    if (item.name === "Backstage passes to a TAFKAL80ETC concert"){
       this.updateEveryThingElse(item);
     } else {
       this.updateEveryThingElse(item);
