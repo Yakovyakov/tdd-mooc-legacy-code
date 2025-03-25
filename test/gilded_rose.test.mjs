@@ -54,15 +54,40 @@ describe("Gilded Rose", () => {
         input: { name: "Aged Brie", sellIn: 5, quality: 10 },
         expected: { sellIn: 4, quality: 11 }
     },
+    {
+      description: "Aged Brie: quality does not exceed 50 (sellIn > 0)",
+      input: { name: "Aged Brie", sellIn: 3, quality: 50 },
+      expected: { sellIn: 2, quality: 50 }
+    },
+    {
+        description: "Aged Brie: quality is increase by 2 when sellIn <= 0",
+        input: { name: "Aged Brie", sellIn: 0, quality: 10 },
+        expected: { sellIn: -1, quality: 12 }
+    },
+    {
+        description: "Aged Brie: Double increase does not exceed 50 (sellIn <= 0)",
+        input: { name: "Aged Brie", sellIn: -2, quality: 49 },
+        expected: { sellIn: -3, quality: 50 }
+    },
+    {
+        description: "Aged Brie: Quality is increase by two if sellIn <= 0",
+        input: { name: "Aged Brie", sellIn: 0, quality: 0 },
+        expected: { sellIn: -1, quality: 2 }
+    },
+    {
+        description: "Aged Brie: quality does not exceed 50 (sellIn > 0)",
+        input: { name: "Aged Brie", sellIn: 1, quality: 49 },
+        expected: { sellIn: 0, quality: 50 }
+    },
   ].forEach(({ description, input, expected }) => {
     test(description, () => {
-        const gildedRose = new Shop([new Item(input.name, input.sellIn, input.quality)]);
-        const items = gildedRose.updateQuality();
-        
-        expect(items[0].quality).toBe(expected.quality);
-        expect(items[0].sellIn).toBe(expected.sellIn);
-        expect(items[0].name).toBe("Aged Brie");
-            });
-});
+      const gildedRose = new Shop([new Item(input.name, input.sellIn, input.quality)]);
+      const items = gildedRose.updateQuality();
+      
+      expect(items[0].quality).toBe(expected.quality);
+      expect(items[0].sellIn).toBe(expected.sellIn);
+      expect(items[0].name).toBe("Aged Brie");
+    });
+  });
 
 });
