@@ -80,10 +80,15 @@ describe("Gilded Rose", () => {
         expected: { sellIn: -1, quality: 2 }
     },
     {
-        description: "Aged Brie: quality does not exceed 50 (sellIn > 0)",
-        input: { name: "Aged Brie", sellIn: 1, quality: 49 },
-        expected: { sellIn: 0, quality: 50 }
-    },
+      description: "Aged Brie: quality does not exceed 50 (sellIn > 0)",
+      input: { name: "Aged Brie", sellIn: 1, quality: 49 },
+      expected: { sellIn: 0, quality: 50 }
+  },
+  {
+    description: "Aged Brie: quality increase by one if sellIn = 1",
+    input: { name: "Aged Brie", sellIn: 1, quality: 30 },
+    expected: { sellIn: 0, quality: 31 }
+  },
   ].forEach(({ description, input, expected }) => {
     test(description, () => {
       const gildedRose = new Shop([new Item(input.name, input.sellIn, input.quality)]);
@@ -142,6 +147,11 @@ describe("Gilded Rose", () => {
       expected: { sellIn: -1, quality: 0 }
     },
     {
+      description: "Backstage passes...: quality is increase by 3 if sellIn = 1",
+      input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 1, quality: 30 },
+      expected: { sellIn: 0, quality: 33 }
+    },
+    {
       description: "Backstage passes...: quality 50 does not change although sellIn <= 5",
       input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 4, quality: 50 },
       expected: { sellIn: 3, quality: 50 }
@@ -172,7 +182,13 @@ describe("Gilded Rose", () => {
       description: "Sulfuras...: sellIn never change and quality is allways 80",
       input: { name: "Sulfuras, Hand of Ragnaros", sellIn: -1, quality: 80 },
       expected: { sellIn: -1 }
+    },
+    {
+      description: "Sulfuras...: sellIn never change and quality is allways 80",
+      input: { name: "Sulfuras, Hand of Ragnaros", sellIn: 33, quality: 44 },
+      expected: { sellIn: 33 }
     }
+
 
   ].forEach(({ description, input, expected }) => {
     test(description, () => {
