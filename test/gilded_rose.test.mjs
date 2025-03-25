@@ -46,6 +46,23 @@ describe("Gilded Rose", () => {
       expect(items[0].sellIn).to.equal(expected.sellIn);
       expect(items[0].quality).to.equal(expected.quality);
     });
+  });
+
+  [
+    {
+        description: "Aged Brie: quality is increase by one if sellIn > 0",
+        input: { name: "Aged Brie", sellIn: 5, quality: 10 },
+        expected: { sellIn: 4, quality: 11 }
+    },
+  ].forEach(({ description, input, expected }) => {
+    test(description, () => {
+        const gildedRose = new Shop([new Item(input.name, input.sellIn, input.quality)]);
+        const items = gildedRose.updateQuality();
+        
+        expect(items[0].quality).toBe(expected.quality);
+        expect(items[0].sellIn).toBe(expected.sellIn);
+        expect(items[0].name).toBe("Aged Brie");
+            });
 });
 
 });
