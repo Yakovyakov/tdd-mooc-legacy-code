@@ -29,15 +29,21 @@ export class Shop {
       return;
     }
     if (item.name === "Sulfuras, Hand of Ragnaros") {
+      this.updateSulfras(item);
       return;
     }
 
     this.updateEveryThingElse(item);
   }
 
+  updateSulfras(item) {
+    item.quality = 80;
+  }
+  
   updateEveryThingElse(item) {
     this.decreaseQuality(item);
     item.sellIn = item.sellIn - 1;
+
     if (item.sellIn < 0) {
       this.decreaseQuality(item);
     }
