@@ -22,9 +22,9 @@ export class Shop {
   updateSingleItem(item) {
     if (item.name === "Aged Brie"){
       this.updateAgedBrie(item);
-    } else {
-      this.updateEveryThingElse(item);
+      return;
     }
+    this.updateEveryThingElse(item);
   }
 
   updateEveryThingElse(item) {
