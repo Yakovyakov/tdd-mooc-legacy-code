@@ -28,6 +28,11 @@ describe("Gilded Rose", () => {
       expected: { name: "foo", sellIn: 0, quality: 0 }
     },
     { 
+      description: "generic item: quality is decrease by one if sellIn > 0",
+      input: { name: "foo", sellIn: 1, quality: 2 },
+      expected: { name: "foo", sellIn: 0, quality: 1 }
+    },
+    { 
       description: "generic item: quality is decrease by two if sellIn <= 0",
       input: { name: "foo", sellIn: 0, quality: 3 },
       expected: { name: "foo", sellIn: -1, quality: 1 }
@@ -42,7 +47,7 @@ describe("Gilded Rose", () => {
       const gildedRose = new Shop([new Item(input.name, input.sellIn, input.quality)]);
       const items = gildedRose.updateQuality();
       
-      expect(items[0].name).to.equal(expected.name);
+      expect(items[0].name).to.equal("foo");
       expect(items[0].sellIn).to.equal(expected.sellIn);
       expect(items[0].quality).to.equal(expected.quality);
     });
@@ -102,44 +107,83 @@ describe("Gilded Rose", () => {
       expected: { sellIn: 9, quality: 22 }
     },
     {
-        description: "Backstage passes...: quality is increase by 2 if sellIn <= 5",
+      description: "Backstage passes...: quality is increase by 2 if sellIn = 6",
+      input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 6, quality: 20 },
+      expected: { sellIn: 5, quality: 22 }
+    },
+    {
+        description: "Backstage passes...: quality is increase by 3 if sellIn <= 5",
         input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 5, quality: 20 },
         expected: { sellIn: 4, quality: 23 }
     },
     {
-        description: "Backstage passes...: quality does not exceed 50 (initial 49, sellIn > 10)",
-        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 12, quality: 49 },
-        expected: { sellIn: 11, quality: 50 }
+      description: "Backstage passes...: quality does not exceed 50 (initial 49, sellIn > 10)",
+      input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 12, quality: 49 },
+      expected: { sellIn: 11, quality: 50 }
     },
     {
-        description: "Backstage passes...: quality does not exceed 50 (initial 48, sellIn <= 5)",
-        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 3, quality: 48 },
-        expected: { sellIn: 2, quality: 50 }
+      description: "Backstage passes...: quality does not exceed 50 (initial 48, sellIn = 11)",
+      input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 11, quality: 48 },
+      expected: { sellIn: 10, quality: 49 }
     },
     {
-        description: "Backstage passes...: quality drops to 0 if sellIn < 0",
-        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 0, quality: 30 },
-        expected: { sellIn: -1, quality: 0 }
+      description: "Backstage passes...: quality does not exceed 50 (initial 49, sellIn < 11)",
+      input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 49 },
+      expected: { sellIn: 9, quality: 50 }
     },
     {
-        description: "Backstage passes...: quality 50 does not change although sellIn <= 5",
-        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 4, quality: 50 },
-        expected: { sellIn: 3, quality: 50 }
+      description: "Backstage passes...: quality does not exceed 50 (initial 48, sellIn <= 5)",
+      input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 3, quality: 48 },
+      expected: { sellIn: 2, quality: 50 }
     },
     {
-        description: "Backstage passes...: quality 0 normally increases",
-        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 8, quality: 0 },
-        expected: { sellIn: 7, quality: 2 }
+      description: "Backstage passes...: quality drops to 0 if sellIn < 0",
+      input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 0, quality: 30 },
+      expected: { sellIn: -1, quality: 0 }
+    },
+    {
+      description: "Backstage passes...: quality 50 does not change although sellIn <= 5",
+      input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 4, quality: 50 },
+      expected: { sellIn: 3, quality: 50 }
+    },
+    {
+      description: "Backstage passes...: quality 0 normally increases",
+      input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 8, quality: 0 },
+      expected: { sellIn: 7, quality: 2 }
     }
   ].forEach(({ description, input, expected }) => {
     test(description, () => {
       const gildedRose = new Shop([new Item(input.name, input.sellIn, input.quality)]);
       const items = gildedRose.updateQuality();
       
+      expect(items[0].name).toBe("Backstage passes to a TAFKAL80ETC concert");
       expect(items[0].quality).toBe(expected.quality);
       expect(items[0].sellIn).toBe(expected.sellIn);
     });
   });
+
+  [
+    {
+      description: "Sulfuras...: sellIn never change and quality is allways 80",
+      input: { name: "Sulfuras, Hand of Ragnaros", sellIn: 7, quality: 80 },
+      expected: { sellIn: 7 }
+    },
+    {
+      description: "Sulfuras...: sellIn never change and quality is allways 80",
+      input: { name: "Sulfuras, Hand of Ragnaros", sellIn: -1, quality: 80 },
+      expected: { sellIn: -1 }
+    }
+
+  ].forEach(({ description, input, expected }) => {
+    test(description, () => {
+      const gildedRose = new Shop([new Item(input.name, input.sellIn, input.quality)]);
+      const items = gildedRose.updateQuality();
+      
+      expect(items[0].name).toBe("Sulfuras, Hand of Ragnaros");
+      expect(items[0].quality).toBe(80);
+      expect(items[0].sellIn).toBe(expected.sellIn);
+  });
+});
 
 
 });
