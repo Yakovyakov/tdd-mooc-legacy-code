@@ -73,10 +73,8 @@ export class Shop {
     }
   }
 
-  decreaseQuality(item) {
-    if (item.quality > 0) {
-      item.quality = item.quality - 1;
-    }
+  decreaseQuality(item, degradation = 1) {
+    item.quality = Math.max(0, item.quality - degradation);
   }
 
   increaseQuality(item) {
