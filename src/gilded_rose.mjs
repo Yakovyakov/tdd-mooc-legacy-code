@@ -24,7 +24,11 @@ export class Shop {
       this.updateAgedBrie(item);
       return;
     }
-    this.updateEveryThingElse(item);
+    if (true){
+      this.updateEveryThingElse(item);
+    } else {
+      this.updateEveryThingElse(item);
+    }
   }
 
   updateEveryThingElse(item) {
