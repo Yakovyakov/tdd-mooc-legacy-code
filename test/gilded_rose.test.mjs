@@ -90,4 +90,21 @@ describe("Gilded Rose", () => {
     });
   });
 
+  [
+    {
+        description: "Backstage passes...: quality is increase by 1 if sellIn > 10",
+        input: { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 15, quality: 20 },
+        expected: { sellIn: 14, quality: 21 }
+    },
+  ].forEach(({ description, input, expected }) => {
+    test(description, () => {
+      const gildedRose = new Shop([new Item(input.name, input.sellIn, input.quality)]);
+      const items = gildedRose.updateQuality();
+      
+      expect(items[0].quality).toBe(expected.quality);
+      expect(items[0].sellIn).toBe(expected.sellIn);
+    });
+  });
+
+
 });
